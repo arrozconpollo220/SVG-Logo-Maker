@@ -1,6 +1,7 @@
 // Node Packages
 const inquirer = require('inquirer');
 const fs = require('fs');
+const shapes = require('./lib/shapes')
 
 // Created an array for user input
 
@@ -18,13 +19,18 @@ const Questions = [
     {
         type: "list",
         message: "Please select a shape.",
+        choices: ["Cicle", "Triangle", "Square"],
         name: "shapes",
-        choices: "Cicle, Triangle, Square",
     }, 
     {
         type: "input",
         message: "Please provide the file name",
         name: "file",
+    },
+    {
+        type: "input",
+        message: "What size would you like your image to be?",
+        name: "size",
     }
 ]
 
@@ -37,7 +43,7 @@ function writeToFile(fileName, data) {
 
 // function to initialize
 function init() {
-    inquirer.prompt(questions)
+    inquirer.prompt(Questions)
         .then((answers) => {
             const shapeInfo = shapes(answers);
             writeToFile('logo.svg', shapeInfo);

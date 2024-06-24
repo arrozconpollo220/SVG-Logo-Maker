@@ -4,7 +4,6 @@ const fs = require('fs');
 const shapes = require('./lib/shapes')
 
 // Created an array for user input
-
 const Questions = [
     {
         type: "input",
@@ -19,8 +18,8 @@ const Questions = [
     {
         type: "list",
         message: "Please select a shape.",
-        choices: ["Cicle", "Triangle", "Square"],
-        name: "shapes",
+        choices: ["Circle", "Triangle", "Square"],
+        name: "shape",
     }, 
     {
         type: "input",
@@ -29,14 +28,19 @@ const Questions = [
     },
     {
         type: "input",
-        message: "What size would you like your image to be?",
-        name: "size",
+        message: "What would you like the height to be?",
+        name: "height",
+    }, 
+    {
+        type: "input",
+        message: "What would you like the width to be?",
+        name: "width",
     }
 ]
 
 // function to create SVG file
 function writeToFile(fileName, data) {
-    fs.writeFile('logo.svg', data, (err) =>
+    fs.writeFile(fileName, data, (err) =>
         err ? console.error(err) : console.log(`${fileName} has been generated successfully!`)
 );
 }
@@ -46,12 +50,13 @@ function init() {
     inquirer.prompt(Questions)
         .then((answers) => {
             const shapeInfo = shapes(answers);
-            writeToFile('logo.svg', shapeInfo);
+            const fileName = `${answers.file}.svg`;
+            writeToFile(fileName, shapeInfo);
         })
         .catch((error) => {
             console.error("Error occurred:", error);
         });
 };
 
-// calling function
+// calling function to start process
 init(); 
